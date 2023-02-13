@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {ButtonNameType} from './App';
 
 export type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -10,7 +10,8 @@ export type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (id: number) => void
+    removeTask: (id: string) => void
+    addTask: (title: string) => void
 
 }
 
@@ -31,21 +32,41 @@ export function Todolist(props: PropsType) {
     if (filterTask === 'Completed') {
         filteredTasks = props.tasks.filter(el => !el.isDone)
     }
+    const [newTaskTitle, setNewTaskTitle] = useState<string>('');
+
+    const onChangeInputHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setNewTaskTitle(event.currentTarget.value);
+
+    }
+
+    const onClickButtonHandler = () => {
+        props.addTask(newTaskTitle);
+        setNewTaskTitle('')
+    }
+
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+
+        if (e.ctrlKey && e.charCode === 13) {onClickButtonHandler()}
+    }
 
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input value={newTaskTitle}
+                       onChange={onChangeInputHandler}
+                       onKeyPress={onKeyPressHandler}/>
+                <button onClick={onClickButtonHandler}>+
+                </button>
             </div>
             <ul>
                 {filteredTasks.map(el => {
+                    const onRemoveHandler = () => {
+                        props.removeTask(el.id)
+                    }
                     return (
                         <li key={el.id}>
-                            <button onClick={() => {
-                                props.removeTask(el.id)
-                            }}>x
+                            <button onClick={onRemoveHandler}>x
                             </button>
                             <input type="checkbox" checked={el.isDone}/>
                             <span>{el.title}</span>
