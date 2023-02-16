@@ -49,7 +49,7 @@ export function Todolist(props: PropsType) {
         props.removeTask(tid)
     }
 
-    const сonstMappedTask = props.tasks.map(t => {
+    const MappedTask = props.tasks.map(t => {
 
             return (
                 <li key={t.id}>
@@ -66,7 +66,7 @@ export function Todolist(props: PropsType) {
             <button onClick={onClickButtonHandler}>+</button>
         </div>
         <ul>
-            {сonstMappedTask}
+            {MappedTask}
         </ul>
         <div>
             <button onClick={allChangeFilterHandler}>All</button>
