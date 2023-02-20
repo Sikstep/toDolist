@@ -8,11 +8,15 @@
   margin-right: 50px;
 }
 
+.input {
+
+}
+
 .error {
   border: red 1px solid;
 }
 
-.error-message {
+.error_message {
   color: red;
 }
 
