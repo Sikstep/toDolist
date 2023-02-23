@@ -42,18 +42,30 @@ function App() {
     }
 
     const changeCheckBox = (newId: string, newIsDone: boolean) => {
-
-        setTasks(tasks.map( el => el.id === newId ? {...el, isDone: newIsDone} : el ))
+        setTasks(tasks.map(el => el.id === newId ? {...el, isDone: newIsDone} : el))
     }
+
+    let todolist = [
+        {id: v1(), title: 'What to learn', filter: 'active'},
+        {id: v1(), title: 'What to buy', filter: 'completed'},
+    ]
 
     return (
         <div className="App">
-            <Todolist title="What to learn"
-                      tasks={tasksForTodolist}
-                      removeTask={removeTask}
-                      changeFilter={changeFilter}
-                      addTask={addTask}
-                      changeCheck={changeCheckBox}/>
+            {
+                todolist.map((tl) => {
+                    return (
+                        <Todolist title={tl.title}
+                                  tasks={tasksForTodolist}
+                                  removeTask={removeTask}
+                                  changeFilter={changeFilter}
+                                  addTask={addTask}
+                                  changeCheck={changeCheckBox}/>
+                    )
+                })
+            }
+
+
         </div>
     );
 }

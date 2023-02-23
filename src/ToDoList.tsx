@@ -59,6 +59,10 @@ export function Todolist(props: PropsType) {
         setFilteredButton('Completed');
     }
 
+    const onChangeBoxHandler = (id: string, currentIsDone: boolean) => {
+        props.changeCheck(id, currentIsDone)
+    }
+
     return <div>
         <h3>{props.title}</h3>
         <div>
@@ -75,11 +79,9 @@ export function Todolist(props: PropsType) {
                 props.tasks.map(t => {
 
                     const onClickHandler = () => props.removeTask(t.id)
-                    const onChangeBoxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        props.changeCheck(t.id, e.currentTarget.checked)
-                    }
+
                     return <li key={t.id} className={t.isDone ? s.isDoneStyle : ''}>
-                        <input type="checkbox" onChange={onChangeBoxHandler} checked={t.isDone}/>
+                        <input type="checkbox" onChange={ (event) => onChangeBoxHandler(t.id, event.currentTarget.checked) } checked={t.isDone}/>
                         <span>{t.title}</span>
                         <button onClick={onClickHandler}>x</button>
                     </li>
